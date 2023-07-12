@@ -4,5 +4,16 @@
     <h2>
       <> Fait avec NgRx <>
     </h2>
+    <ul *ngIf="todoList | async as todoItems">
+      <li *ngFor="let task of todoItems">
+        {{task.id}} : 
+        {{task.description}}
+        <span><button>Suprimer</button></span>
+      </li>
+    </ul>
+    <div class="buttons">
+      <input type="text">
+      <button class="add">Ajouter Tache</button>
+    </div>
   </div>
 </div>

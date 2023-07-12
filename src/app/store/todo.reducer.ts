@@ -23,13 +23,13 @@ const todoListReducer = createReducer(
   }))
 )
 
-function deleteItemFromList(list: TodoItem[], id: number): TodoItem[] {
+function deleteItemFromList(list: TodoItem[], id: string): TodoItem[] {
   return list.filter((e) => {
     return e.id !== id
   })
 }
 
-function changeCheckedTaskFromList(list: TodoItem[], id: number, isCompleted: boolean): TodoItem[] {
+function changeCheckedTaskFromList(list: TodoItem[], id: string, isCompleted: boolean): TodoItem[] {
   return list.map(e => {
     if (e.id === id) {
       return { ...e, isCompleted: isCompleted }
