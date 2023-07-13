@@ -4,16 +4,17 @@
     <h2>
       <> Fait avec NgRx <>
     </h2>
-    <ul *ngIf="todoList | async as todoItems">
-      <li *ngFor="let task of todoItems">
-        {{task.id}} : 
-        {{task.description}}
-        <span><button>Suprimer</button></span>
+    <div>
+      <input [(ngModel)]="newTask" placeholder="Nouvelle tâche" />
+      <button class="add" (click)="addTask()">Ajouter Tâche</button>
+    </div>
+    <ul>
+      <li *ngFor="let task of tasks$ | async">
+        <span class="description" [class.completed]="task.isCompleted">{{ task.description }}</span>
+        <span class="is">{{task.isCompleted}}</span>
+        <input type="checkbox" (click)="toggleTaskCompletion(task.id)">
+        <button class="rm" (click)="deleteTask(task.id)">X</button>
       </li>
     </ul>
-    <div class="buttons">
-      <input type="text">
-      <button class="add">Ajouter Tache</button>
-    </div>
   </div>
 </div>

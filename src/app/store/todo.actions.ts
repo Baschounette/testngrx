@@ -1,9 +1,15 @@
 import { createAction, props } from "@ngrx/store";
-import { TodoItem } from "../model/todo-item";
+import { Task } from "../model/task";
 
-export const newItem = createAction("[Todo List] Ajout d'une tache a faire",
-  props<{ item: TodoItem }>());
-export const deleteItem = createAction("[Todo List] suprimer une tache a faire",
-  props<{ id: string }>());
-export const changeCheckItem = createAction("[Todo List] Valide ou dévalide la tache",
-  props<{ id: string, isCompleted: boolean }>());
+export const addTask = createAction(
+  "[Todo List] add",
+  props<{ task: Task }>()
+);
+export const deleteTask = createAction(
+  "[Todo List] delete",
+  props<{ taskId: number }>()
+);
+export const toggleTaskCompletion = createAction(
+  "[Todo List] Toggle Completion",
+  props<{ taskId: number }>()
+);

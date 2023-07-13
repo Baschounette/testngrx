@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TodoItem } from '../model/todo-item';
+import { Task } from '../model/task';
 import { ServiceService } from '../service/service.service';
-import { Store } from '@ngrx/store';
-import { State } from '../store/todo.selectors';
-import * as StoreActions from '../store/todo.actions';
-import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-todo-list',
@@ -14,26 +10,29 @@ import { v4 as uuid } from 'uuid';
 })
 export class TodoListComponent {
 
-  todoList: Observable<TodoItem[]> | undefined;
+  tasks$: Observable<Task[]>;
+  newTask: string = '';
 
-  constructor(private service: ServiceService, private store: Store<State>) {
-
+  constructor(private service: ServiceService) {
+    this.tasks$ = this.service.getTasks();
   }
 
-  ngOnInit() {
-    this.todoList = this.service.getTodoList();
+  addTask() {
+    const task: Task = {
+      id: Date.now(),
+      description: this.newTask,
+      isCompleted: false
+    };
+    this.service.addTask(task);
+    this.newTask = '';
   }
 
-  addTask(description: string) {
-    this.store.dispatch(StoreActions.newItem({item : {id: uuid(), description: description, isCompleted: false}}));
+  deleteTask(taskId: number) {
+    this.service.deleteTask(taskId);
   }
 
-  rmTask(item: { id: any; }) {
-    this.store.dispatch(StoreActions.deleteItem({id: item.id}));
-  }
-
-  changeChecked(item: any, isCompleted: boolean) {
-    this.store.dispatch(StoreActions.changeCheckItem({id: item.id, isCompleted: isCompleted}));
+  toggleTaskCompletion(taskId: number) {
+    this.service.toggleTaskCompletion(taskId);
   }
 
 

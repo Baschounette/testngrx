@@ -5,7 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { StoreModule } from '@ngrx/store';
-import { reducer } from './store/todo.reducer';
+import { taskReducer } from './store/todo.reducer';
+import { ServiceService } from './service/service.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,11 +15,12 @@ import { reducer } from './store/todo.reducer';
     TodoListComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot(reducer)
+    StoreModule.forRoot({ tasks: taskReducer })
   ],
-  providers: [],
+  providers: [ServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
